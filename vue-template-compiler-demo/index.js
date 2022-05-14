@@ -1,16 +1,18 @@
+// 模板编译 - 原理
 const compiler = require('vue-template-compiler')
 
-// 插值
+// 1.1 插值
 // const template = `<p>{{message}}</p>`
 // with(this){return createElement('p',[createTextVNode(toString(message))])}
+// this --> const vm = new Vue() ，this 是vm 实例。
 // h -> vnode
 // createElement -> vnode
 
-// // 表达式
+// // 1.2 表达式
 // const template = `<p>{{flag ? message : 'no message found'}}</p>`
 // // with(this){return _c('p',[_v(_s(flag ? message : 'no message found'))])}
 
-// // 属性和动态属性
+// // 1.3 属性和动态属性
 // const template = `
 //     <div id="div1" class="container">
 //         <img :src="imgUrl"/>
@@ -21,7 +23,7 @@ const compiler = require('vue-template-compiler')
 //      [
 //          _c('img',{attrs:{"src":imgUrl}})])}
 
-// // 条件
+// // 1.4 条件
 // const template = `
 //     <div>
 //         <p v-if="flag === 'a'">A</p>
@@ -30,7 +32,7 @@ const compiler = require('vue-template-compiler')
 // `
 // with(this){return _c('div',[(flag === 'a')?_c('p',[_v("A")]):_c('p',[_v("B")])])}
 
-// 循环
+// 1.5 循环
 // const template = `
 //     <ul>
 //         <li v-for="item in list" :key="item.id">{{item.title}}</li>
@@ -38,22 +40,22 @@ const compiler = require('vue-template-compiler')
 // `
 // with(this){return _c('ul',_l((list),function(item){return _c('li',{key:item.id},[_v(_s(item.title))])}),0)}
 
-// 事件
+// 1.6 事件
 // const template = `
 //     <button @click="clickHandler">submit</button>
 // `
 // with(this){return _c('button',{on:{"click":clickHandler}},[_v("submit")])}
 
-// v-model
+// 1.7 v-model
 const template = `<input type="text" v-model="name">`
 // 主要看 input 事件
 // with(this){return _c('input',{directives:[{name:"model",rawName:"v-model",value:(name),expression:"name"}],attrs:{"type":"text"},domProps:{"value":(name)},on:{"input":function($event){if($event.target.composing)return;name=$event.target.value}}})}
 
-// render 函数
-// 返回 vnode
-// patch
 
-// 编译
+// 1 编译
+// vue template complier 将模板编译为render函数，。render 函数
+// 执行render 函数返回 vnode
+// 基于vnode 再执行patch 和 diff
 const res = compiler.compile(template)
 console.log(res.render)
 
