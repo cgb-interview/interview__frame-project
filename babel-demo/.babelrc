@@ -1,13 +1,15 @@
 {
+    // babel 插件的集合
     "presets": [
         [
             "@babel/preset-env",
             {
-                "useBuiltIns": "usage",
-                "corejs": 3
+                "useBuiltIns": "usage", // 按需引入
+                "corejs": 3 // 版本
             }
         ]
     ],
+    // 扩展插件
     "plugins": [
         [
             "@babel/plugin-transform-runtime",

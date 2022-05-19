@@ -1,16 +1,17 @@
 const path = require('path')
 const webpack = require('webpack')
 const webpackCommonConf = require('./webpack.common.js')
-const { smart } = require('webpack-merge')
-const { srcPath, distPath } = require('./paths')
-const HotModuleReplacementPlugin = require('webpack/lib/HotModuleReplacementPlugin');
+const {smart} = require('webpack-merge')
+const {srcPath, distPath} = require('./paths')
+const HotModuleReplacementPlugin = require('webpack/lib/HotModuleReplacementPlugin')
 
 module.exports = smart(webpackCommonConf, {
     mode: 'development',
     entry: {
         // index: path.join(srcPath, 'index.js'),
+        // 热更新
         index: [
-            'webpack-dev-server/client?http://localhost:8080/',
+            'webpack-dev-server/client?http://localhost:8080/', // 端口和本地服务端口保持一致。
             'webpack/hot/dev-server',
             path.join(srcPath, 'index.js')
         ],
@@ -21,7 +22,7 @@ module.exports = smart(webpackCommonConf, {
             {
                 test: /\.js$/,
                 loader: ['babel-loader?cacheDirectory'],
-                include: srcPath,
+                include: srcPath
                 // exclude: /node_modules/
             },
             // 直接引入图片 url
@@ -55,12 +56,12 @@ module.exports = smart(webpackCommonConf, {
     ],
     devServer: {
         port: 8080,
-        progress: true,  // 显示打包的进度条
-        contentBase: distPath,  // 根目录
-        open: true,  // 自动打开浏览器
-        compress: true,  // 启动 gzip 压缩
+        progress: true, // 显示打包的进度条
+        contentBase: distPath, // 根目录
+        open: true, // 自动打开浏览器
+        compress: true, // 启动 gzip 压缩
 
-        hot: true,
+        hot: true, // 开启热更新
 
         // 设置代理
         proxy: {
@@ -75,7 +76,7 @@ module.exports = smart(webpackCommonConf, {
                 }
             }
         }
-    },
+    }
     // watch: true, // 开启监听，默认为 false
     // watchOptions: {
     //     ignored: /node_modules/, // 忽略哪些
